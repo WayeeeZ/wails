@@ -742,6 +742,10 @@ func (f *Frontend) processMessageWithAdditionalObjects(message string, sender *e
 
 			file := (*edge.ICoreWebView2File)(unsafe.Pointer(_file))
 			defer file.Release()
+			if file == nil {
+				f.logger.Error("Invalid file")
+				return
+			}
 
 			filepath, err := file.GetPath()
 			if err != nil {
